@@ -1,0 +1,8 @@
+const menuButton=document.querySelector('.menu-toggle');const nav=document.querySelector('.nav-links');if(menuButton&&nav){menuButton.addEventListener('click',()=>{const expanded=menuButton.getAttribute('aria-expanded')==='true';menuButton.setAttribute('aria-expanded',String(!expanded));nav.classList.toggle('open',!expanded)});nav.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{nav.classList.remove('open');menuButton.setAttribute('aria-expanded','false')}));}document.querySelectorAll('.faq-list details').forEach(item=>item.addEventListener('toggle',()=>{if(item.open)document.querySelectorAll('.faq-list details').forEach(other=>{if(other!==item)other.open=false})}));const year=document.querySelector('#year');if(year)year.textContent=new Date().getFullYear();
+// Light/dark theme toggle; preference is remembered in this browser.
+const themeButton=document.querySelector('.theme-toggle');
+const savedTheme=localStorage.getItem('vitara-theme');
+if(savedTheme==='dark') document.documentElement.dataset.theme='dark';
+function updateThemeButton(){if(!themeButton)return;const dark=document.documentElement.dataset.theme==='dark';themeButton.querySelector('.theme-icon').textContent=dark?'☀':'☾';themeButton.querySelector('.theme-label').textContent=dark?'Light':'Dark';themeButton.setAttribute('aria-label',dark?'Switch to light theme':'Switch to dark theme');}
+updateThemeButton();
+if(themeButton)themeButton.addEventListener('click',()=>{const dark=document.documentElement.dataset.theme==='dark';if(dark){delete document.documentElement.dataset.theme;localStorage.setItem('vitara-theme','light')}else{document.documentElement.dataset.theme='dark';localStorage.setItem('vitara-theme','dark')}updateThemeButton()});
